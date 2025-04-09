@@ -1,10 +1,10 @@
 package org.mrstm.quoraapi.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -23,5 +23,8 @@ public class Answer extends BaseModel {
     @ManyToOne
     @JoinColumn(name = "user_id" , nullable = false)
     private User user;
+
+    @OneToMany(mappedBy = "answer" , cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
 
 }
