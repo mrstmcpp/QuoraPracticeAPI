@@ -1,0 +1,34 @@
+package org.mrstm.quoraapi.models;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class Question extends BaseModel {
+
+    @Column(nullable = false)
+    private String title;
+
+    private String body;
+
+    @ManyToMany
+    @JoinTable(
+            name = "question_topics",
+            joinColumns = @JoinColumn(name = "question_id"), //the column in the join table that links to question. (this side)
+            // joinColumns refers to this columns
+            inverseJoinColumns = @JoinColumn(name = "topic_id") // other entity
+    )
+    private List<Topic> topics = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id" , nullable = false)
+    private User user;
+}
