@@ -32,4 +32,16 @@ public class UserController {
         List<User> allUsers = userService.findAll();
         return new ResponseEntity<>(allUsers, HttpStatus.OK);
     }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<User> getUserById(@PathVariable int userId){
+        User user = userService.findById(userId);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @PutMapping("/{userId}")
+    public ResponseEntity<User> updateUser(@PathVariable int userId, @RequestBody @Valid User user){
+        User updatedUserObj = userService.updateUser(userId, user);
+        return new ResponseEntity<>(updatedUserObj, HttpStatus.OK);
+    }
 }
