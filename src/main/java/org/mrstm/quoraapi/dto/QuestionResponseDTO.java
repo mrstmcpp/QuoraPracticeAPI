@@ -7,9 +7,9 @@ import java.util.List;
 
 @Getter
 @Setter
-public class QuestionRequestDTO {
+public class QuestionResponseDTO {
     private String title;
     private String body;
-    private int userid;
+    private String username;
     private List<String> topics;
 }

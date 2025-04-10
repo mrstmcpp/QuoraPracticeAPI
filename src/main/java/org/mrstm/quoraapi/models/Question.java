@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Question extends BaseModel {
 
-    @Column(nullable = false)
+    @Column(nullable = false ,unique = true ,length = 100)
     @NotBlank(message = "Title is required")
     private String title;
 

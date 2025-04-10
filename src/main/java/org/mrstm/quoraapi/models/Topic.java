@@ -1,6 +1,7 @@
 package org.mrstm.quoraapi.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -24,5 +25,10 @@ public class Topic {
     private String name;
 
     @ManyToMany(mappedBy = "topics")
+    @JsonIgnore // to break the infinite loop while sending request.
+    //i.e. while sending api request due to many-many relationship
+    //one topic nd question get inserted in each other which lead to infinite
+    // recursion calls.... using jsonignre it can be broken
     private List<Question> questions = new ArrayList<>();
+
 }
