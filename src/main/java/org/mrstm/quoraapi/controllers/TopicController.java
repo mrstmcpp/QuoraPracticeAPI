@@ -1,7 +1,10 @@
 package org.mrstm.quoraapi.controllers;
 
+import jakarta.validation.Valid;
 import org.mrstm.quoraapi.models.Topic;
 import org.mrstm.quoraapi.services.TopicService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +19,9 @@ public class TopicController {
     }
 
     @PostMapping("/")
-    public Topic addTopic(@RequestBody Topic topic){
-        return topicService.addTopic(topic);
+    public ResponseEntity<Topic> addTopic(@RequestBody @Valid Topic topic){
+        Topic createedTopic = topicService.addTopic(topic);
+        return new ResponseEntity<>(createedTopic, HttpStatus.CREATED);
     }
 
     @GetMapping("/")

@@ -15,5 +15,9 @@ public abstract class BaseModel {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
+    @PrePersist //making sure method is called before.
+    protected void onCreate() {
+        createdAt = new Date();
+    }
 
 }

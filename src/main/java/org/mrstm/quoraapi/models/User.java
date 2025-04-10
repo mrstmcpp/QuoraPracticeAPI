@@ -22,6 +22,7 @@ public class User {
     private String username;
 
     @Column(nullable = false)
+    @NotBlank(message = "Password cannot be empty")
     private String password;
 
     @Email(message = "Please provide a valid email address")

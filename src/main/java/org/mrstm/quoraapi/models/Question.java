@@ -1,6 +1,7 @@
 package org.mrstm.quoraapi.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.List;
 public class Question extends BaseModel {
 
     @Column(nullable = false)
+    @NotBlank(message = "Title is required")
     private String title;
 
     private String body;
@@ -29,6 +31,6 @@ public class Question extends BaseModel {
     private List<Topic> topics = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id" , nullable = false)
+    @JoinColumn(name = "userid" , nullable = false)
     private User user;
 }

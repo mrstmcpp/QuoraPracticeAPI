@@ -2,6 +2,7 @@ package org.mrstm.quoraapi.models;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class Topic {
     private int id;
 
     @Column(unique = true ,nullable = false)
+    @NotBlank(message = "Name cannot be blank.")
     private String name;
 
     @ManyToMany(mappedBy = "topics")
