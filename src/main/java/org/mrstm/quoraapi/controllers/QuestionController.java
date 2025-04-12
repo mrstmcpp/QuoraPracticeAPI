@@ -3,8 +3,8 @@ package org.mrstm.quoraapi.controllers;
 
 import jakarta.validation.Valid;
 
-import org.mrstm.quoraapi.dto.QuestionRequestDTO;
-import org.mrstm.quoraapi.dto.QuestionResponseDTO;
+import org.mrstm.quoraapi.dto.Question.QuestionRequestDTO;
+import org.mrstm.quoraapi.dto.Question.QuestionResponseDTO;
 import org.mrstm.quoraapi.models.Question;
 import org.mrstm.quoraapi.models.Topic;
 import org.mrstm.quoraapi.services.QuestionService;
@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/questions")
@@ -42,5 +41,11 @@ public class QuestionController {
                     .build();
         }).toList();
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Question> getQuestion(@PathVariable int id) {
+        Question q = questionService.getQuestion(id);
+        return new ResponseEntity<>(q, HttpStatus.OK);
     }
 }

@@ -1,6 +1,6 @@
 package org.mrstm.quoraapi.services;
 
-import org.mrstm.quoraapi.dto.QuestionRequestDTO;
+import org.mrstm.quoraapi.dto.Question.QuestionRequestDTO;
 import org.mrstm.quoraapi.exceptions.NotFoundException;
 import org.mrstm.quoraapi.models.Question;
 import org.mrstm.quoraapi.models.Topic;
@@ -11,6 +11,7 @@ import org.mrstm.quoraapi.repositories.UserRepository;
 import org.mrstm.quoraapi.utils.searchSpecifications.QuestionSpecification;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,5 +75,9 @@ public class QuestionService {
                 .and(QuestionSpecification.hasTopicIn(topics));
 
         return questionRepository.findAll(spec);
+    }
+
+    public Question getQuestion(@PathVariable int id) {
+        return questionRepository.findById(id).orElseThrow(() -> new NotFoundException("Question not found"));
     }
 }

@@ -1,4 +1,4 @@
-package org.mrstm.quoraapi.dto;
+package org.mrstm.quoraapi.dto.Question;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -19,16 +19,18 @@ public class User {
     @Column(name = "id")
     private int id;
 
-    @Column(unique = true , nullable = false)
+    @Column(unique = true)
+    @NotBlank(message = "Username cannot be empty")
     private String username;
 
-    @Column(nullable = false)
+    @Column
     @NotBlank(message = "Password cannot be empty")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)  //to avoid getting fetch through api
     private String password;
 
     @Email(message = "Please provide a valid email address")
-    @Column(unique = true , nullable = false)
+    @NotBlank(message = "Email cannot be blank.")
+    @Column(unique = true)
     private String email;
 
     private String bio;

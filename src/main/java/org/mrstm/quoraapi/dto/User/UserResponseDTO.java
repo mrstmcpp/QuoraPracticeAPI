@@ -1,4 +1,4 @@
-package org.mrstm.quoraapi.dto;
+package org.mrstm.quoraapi.dto.User;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;

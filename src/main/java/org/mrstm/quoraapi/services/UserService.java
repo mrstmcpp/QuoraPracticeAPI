@@ -1,5 +1,6 @@
 package org.mrstm.quoraapi.services;
 
+import org.mrstm.quoraapi.dto.User.UserUpdateDTO;
 import org.mrstm.quoraapi.exceptions.AlreadyExistsException;
 import org.mrstm.quoraapi.exceptions.NotFoundException;
 import org.mrstm.quoraapi.models.User;
@@ -41,23 +42,26 @@ public class UserService {
                 .orElseThrow(() -> new NotFoundException("User not found"));
     }
 
-    public User updateUser(User user){
-        User existingUser = userRepository.findById(user.getId()).orElseThrow(() -> new NotFoundException("User not found"));
+    public User updateUser(int userId , UserUpdateDTO userDto){
+        User existingUser = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
 
-        if(existingUser.getUsername().equals(user.getUsername()) && userRepository.findByUsername(user.getUsername()).isPresent()){
+        if (userDto.getUsername() != null &&
+                !userDto.getUsername().equals(existingUser.getUsername()) &&
+                userRepository.findByUsername(userDto.getUsername()).isPresent()) {
             throw new AlreadyExistsException("Username is already in use");
         }
 
-        if(existingUser.getEmail().equals(user.getEmail()) && userRepository.findByEmail(user.getEmail()).isPresent()){
+        if (userDto.getEmail() != null &&
+                !userDto.getEmail().equals(existingUser.getEmail()) &&
+                userRepository.findByEmail(userDto.getEmail()).isPresent()) {
             throw new AlreadyExistsException("Email is already in use");
         }
-//        UserResponseDTO userResponseDTO = new UserResponseDTO();
-        existingUser.setBio(user.getBio());
-        existingUser.setUsername(user.getUsername());
-        existingUser.setEmail(user.getEmail());
-        userRepository.save(existingUser);
 
-        return existingUser;
+        if (userDto.getUsername() != null) existingUser.setUsername(userDto.getUsername());
+        if (userDto.getEmail() != null) existingUser.setEmail(userDto.getEmail());
+        if (userDto.getBio() != null) existingUser.setBio(userDto.getBio());
+        if(userDto.getPassword() != null && !userDto.getPassword().isBlank()) existingUser.setPassword(userDto.getPassword());
+        return userRepository.save(existingUser);
 
     }
 }

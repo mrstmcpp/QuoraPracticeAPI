@@ -38,4 +38,11 @@ public class GlobalExceptionHandler {
         response.put("message", ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(CannotBeEmptyException.class)
+    public ResponseEntity<Map<String, Object>> handleCannotBeEmptyException(CannotBeEmptyException ex){
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 }

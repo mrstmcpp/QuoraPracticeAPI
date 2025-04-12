@@ -1,7 +1,7 @@
 package org.mrstm.quoraapi.controllers;
 
 
-import jakarta.validation.Valid;
+import org.mrstm.quoraapi.dto.User.UserUpdateDTO;
 import org.mrstm.quoraapi.models.User;
 import org.mrstm.quoraapi.services.UserService;
 import org.springframework.http.HttpStatus;
@@ -45,21 +45,10 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<User> updateUser(@PathVariable int userId, @RequestBody User user) {
-        User existingUser = userService.findById(userId);
-        if (existingUser == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        User updatedUserObj = User.builder()
-                .id(userId)
-                .email(user.getEmail())
-                .password(user.getPassword())
-                .username(user.getUsername())
-                .bio(user.getBio())
-                .build();
+    public ResponseEntity<User> updateUser(@PathVariable int userId, @RequestBody UserUpdateDTO userDto) {
 
-        User savedUser = userService.updateUser(updatedUserObj);
-        return new ResponseEntity<>(savedUser, HttpStatus.OK);
+        User updatedUser = userService.updateUser(userId ,userDto);
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
 }
