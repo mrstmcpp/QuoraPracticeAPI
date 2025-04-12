@@ -1,6 +1,7 @@
 package org.mrstm.quoraapi.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -18,12 +19,12 @@ public class User {
     @Column(name = "id")
     private int id;
 
-    @NotBlank(message = "Username cannot be empty")
     @Column(unique = true , nullable = false)
     private String username;
 
     @Column(nullable = false)
     @NotBlank(message = "Password cannot be empty")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)  //to avoid getting fetch through api
     private String password;
 
     @Email(message = "Please provide a valid email address")

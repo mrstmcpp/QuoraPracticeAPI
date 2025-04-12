@@ -32,7 +32,8 @@ public class UserService {
     }
 
     public List<User> findAll(){
-        return userRepository.findAll();
+        List<User> users = userRepository.findAll();
+        return users;
     }
 
     public User findById(int id){
@@ -40,19 +41,23 @@ public class UserService {
                 .orElseThrow(() -> new NotFoundException("User not found"));
     }
 
-    public User updateUser(int id, User user){
-        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+    public User updateUser(User user){
+        User existingUser = userRepository.findById(user.getId()).orElseThrow(() -> new NotFoundException("User not found"));
+
+        if(existingUser.getUsername().equals(user.getUsername()) && userRepository.findByUsername(user.getUsername()).isPresent()){
             throw new AlreadyExistsException("Username is already in use");
         }
 
-        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+        if(existingUser.getEmail().equals(user.getEmail()) && userRepository.findByEmail(user.getEmail()).isPresent()){
             throw new AlreadyExistsException("Email is already in use");
         }
-        User existingUser = findById(id);
+//        UserResponseDTO userResponseDTO = new UserResponseDTO();
+        existingUser.setBio(user.getBio());
         existingUser.setUsername(user.getUsername());
         existingUser.setEmail(user.getEmail());
-        existingUser.setPassword(user.getPassword());
-        return userRepository.save(existingUser);
+        userRepository.save(existingUser);
+
+        return existingUser;
 
     }
 }

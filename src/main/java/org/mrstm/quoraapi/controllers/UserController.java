@@ -2,7 +2,6 @@ package org.mrstm.quoraapi.controllers;
 
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import org.mrstm.quoraapi.models.User;
 import org.mrstm.quoraapi.services.UserService;
 import org.springframework.http.HttpStatus;
@@ -22,8 +21,14 @@ public class UserController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<User> signup(@RequestBody @Valid User user){
-        User createdUser = userService.signup(user);
+    public ResponseEntity<User> signup(@RequestBody User user){
+        User newUser = User.builder()
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .username(user.getUsername())
+                .bio(user.getBio())
+                .build();
+        User createdUser = userService.signup(newUser);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
@@ -40,8 +45,21 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<User> updateUser(@PathVariable int userId, @RequestBody @Valid User user){
-        User updatedUserObj = userService.updateUser(userId, user);
-        return new ResponseEntity<>(updatedUserObj, HttpStatus.OK);
+    public ResponseEntity<User> updateUser(@PathVariable int userId, @RequestBody User user) {
+        User existingUser = userService.findById(userId);
+        if (existingUser == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        User updatedUserObj = User.builder()
+                .id(userId)
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .username(user.getUsername())
+                .bio(user.getBio())
+                .build();
+
+        User savedUser = userService.updateUser(updatedUserObj);
+        return new ResponseEntity<>(savedUser, HttpStatus.OK);
     }
+
 }

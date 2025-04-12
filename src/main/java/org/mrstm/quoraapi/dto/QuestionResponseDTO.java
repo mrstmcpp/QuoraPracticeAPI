@@ -1,12 +1,14 @@
 package org.mrstm.quoraapi.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class QuestionResponseDTO {
     private String title;
     private String body;
