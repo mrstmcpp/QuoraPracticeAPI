@@ -45,6 +45,7 @@ public class QuestionController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Question> getQuestion(@PathVariable int id) {
+
         Question q = questionService.getQuestion(id);
         return new ResponseEntity<>(q, HttpStatus.OK);
     }
