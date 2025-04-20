@@ -2,7 +2,6 @@ package org.mrstm.quoraapi.services;
 
 import jakarta.transaction.Transactional;
 import org.mrstm.quoraapi.adaptors.CommentAdaptors.CommentAdaptors;
-import org.mrstm.quoraapi.adaptors.CommentAdaptors.CommentAdaptorsImpl;
 import org.mrstm.quoraapi.dto.Comment.CommentRequestDTO;
 import org.mrstm.quoraapi.dto.Comment.CommentResponseDTO;
 import org.mrstm.quoraapi.exceptions.CannotBeEmptyException;

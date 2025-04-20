@@ -7,6 +7,10 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
+
 @Entity
 @Builder
 @Getter
@@ -34,5 +38,19 @@ public class User {
     private String email;
 
     private String bio;
+
+    // This user is the FOLLOWER (me), I'm following others
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "user_following",
+            joinColumns = @JoinColumn(name = "follower_id"),         // ME
+            inverseJoinColumns = @JoinColumn(name = "followee_id")   // THEM
+
+    )
+    private Set<User> following = new HashSet<>(); // who I follow
+
+    // USERS who follow ME
+    @ManyToMany(mappedBy = "following")
+    private Set<User> followers = new HashSet<>(); // who follows me
 
 }
