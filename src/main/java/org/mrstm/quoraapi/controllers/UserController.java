@@ -6,6 +6,7 @@ import org.mrstm.quoraapi.models.User;
 import org.mrstm.quoraapi.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -49,6 +50,12 @@ public class UserController {
 
         User updatedUser = userService.updateUser(userId ,userDto);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+    }
+
+    @PostMapping("/{userId}/follow/{targetUserId}")
+    public ResponseEntity<String> followUser(@PathVariable @Validated int userId, @PathVariable @Validated int targetUserId) {
+        Boolean response = userService.followUser(userId, targetUserId);
+        return new ResponseEntity<>(response ? "Success" : "Error", response ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 
 }

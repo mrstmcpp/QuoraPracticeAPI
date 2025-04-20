@@ -64,4 +64,20 @@ public class UserService {
         return userRepository.save(existingUser);
 
     }
+
+
+    public Boolean followUser(int userId, int targetUserId){
+        if (userId == targetUserId) {
+            throw new IllegalArgumentException("User cannot follow themselves");
+        }
+        User currUser = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Current User not found"));
+        User targetUser = userRepository.findById(targetUserId).orElseThrow(() -> new NotFoundException("Target User not found"));
+
+        if(currUser.getFollowing().contains(targetUser)){
+            return false;
+        }
+        currUser.getFollowing().add(targetUser);
+        userRepository.save(currUser);
+        return true;
+    }
 }

@@ -1,6 +1,7 @@
 package org.mrstm.quoraapi.dto.User;
 
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
