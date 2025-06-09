@@ -1,6 +1,7 @@
 package org.mrstm.quoraapi.controllers;
 
 
+import jakarta.validation.Valid;
 import org.mrstm.quoraapi.dto.Comment.CommentRequestDTO;
 import org.mrstm.quoraapi.dto.Comment.CommentResponseDTO;
 import org.mrstm.quoraapi.models.Comment;
@@ -30,4 +31,5 @@ public class CommentController {
         CommentResponseDTO comment = commentService.addCommentOnComment(commentId, commentRequestDTO);
         return new ResponseEntity<>(comment , HttpStatus.CREATED);
     }
+
 }

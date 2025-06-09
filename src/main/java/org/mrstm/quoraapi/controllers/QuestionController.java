@@ -5,11 +5,13 @@ import jakarta.validation.Valid;
 
 import org.mrstm.quoraapi.dto.Question.QuestionRequestDTO;
 import org.mrstm.quoraapi.dto.Question.QuestionResponseDTO;
+import org.mrstm.quoraapi.models.LikeEntity;
 import org.mrstm.quoraapi.models.Question;
 import org.mrstm.quoraapi.models.Topic;
 import org.mrstm.quoraapi.services.QuestionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -49,4 +51,5 @@ public class QuestionController {
         Question q = questionService.getQuestion(id);
         return new ResponseEntity<>(q, HttpStatus.OK);
     }
+
 }
